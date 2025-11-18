@@ -29,9 +29,15 @@ router.post("/links", async (req, res) => {
             if(existing.rows.length > 0){
                 return res.status(409).json({ error: "Code already exists" });
             }
+             if (code.length < 6 || code.length > 8) {
+               return res
+                 .status(400)
+                 .json({ error: "Code is can be from length 6 to 8" });
+             }
             if(!codeRegex.test(code)){  
                 return res.status(400).json({ error: "Invalid code format" });
             }
+           
         }
         if(!url){
             return res.status(400).json({ error: "URL is required" });

@@ -14,6 +14,8 @@ const Link = sequelize.define('Link', {
         type: Sequelize.STRING,
         unique: true,
         allowNull: false,
+        min_length: 6,
+        max_length: 8,
     },
     target_url: {
         type: Sequelize.STRING,
