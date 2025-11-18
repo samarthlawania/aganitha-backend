@@ -3,6 +3,7 @@ const { Pool } = require('pg');
 const cors = require("cors");
 
 const router = require('./routes/linkCrud');
+const { redirectRouter } = require('./controllers/redirect');
 
 
 require('dotenv').config(); // loads .env into process.env
@@ -17,6 +18,8 @@ app.use(express.json({ limit: "200kb" }));
 
 
 app.use('/api', router);
+
+app.use("/:code", redirectRouter);
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
