@@ -73,28 +73,10 @@ router.get("/links", async (req, res) => {
 });
 
 // Get a single link by ID
-router.get("/links/:id", async (req, res) => {
-  const { id } = req.params;
+router.get("/links/:code", async (req, res) => {
+  const { code } = req.params;
   try {
-    const result = await pool.query("SELECT * FROM links WHERE id = $1", [id]);
-    if (result.rows.length === 0) {
-      return res.status(404).json({ error: "Link not found" });
-    }
-    res.json(result.rows[0]);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Database error" });
-  }
-});
-// Update a link by ID
-router.put("/links/:id", async (req, res) => {
-  const { id } = req.params;
-    const { url, description } = req.body;
-    try {
-    const result = await pool.query(
-      "UPDATE links SET url = $1, description = $2 WHERE id = $3 RETURNING *",
-      [url, description, id]
-    );
+    const result = await pool.query("SELECT * FROM links WHERE code = $1", [code]);
     if (result.rows.length === 0) {
       return res.status(404).json({ error: "Link not found" });
     }
@@ -107,10 +89,13 @@ router.put("/links/:id", async (req, res) => {
 
 // Delete a link by ID  
 
-router.delete("/links/:id", async (req, res) => {
-  const { id } = req.params;
+router.delete("/links/:code", async (req, res) => {
+  const { code } = req.params;
     try {
-    const result = await pool.query("DELETE FROM links WHERE id = $1 RETURNING *", [id]);
+    const result = await pool.query(
+      "DELETE FROM links WHERE code = $1 RETURNING *",
+      [code]
+    );
     if (result.rows.length === 0) {
       return res.status(404).json({ error: "Link not found" });
     }
