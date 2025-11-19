@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { Pool } = require("pg");
 const {customAlphabet} = require("nanoid");
-const {randomLength} = require("../utils/randomLength");
+const randomLength = require("../utils/randomLength");
 
 const codeRegex = /^[A-Za-z0-9]{6,8}$/;
 
